@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--读取配置文件-->
+    <properties resource="mybatis-jdbc.properties"/>
+
+    <settings>
+
+        <setting name="cacheEnabled" value="true"/>
+
+        <!-- 延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!---->
+        <setting name="multipleResultSetsEnabled" value="true"/>
+
+        <!--使用列标签-->
+        <setting name="useColumnLabel" value="true"/>
+
+        <!-- 是否启用mybatis的主键生成策略-->
+        <setting name="useGeneratedKeys" value="false"/>
+
+        <!---->
+        <setting name="autoMappingBehavior" value="PARTIAL"/>
+
+        <!--未知列名处理-->
+        <setting name="autoMappingUnknownColumnBehavior" value="WARNING"/>
+
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+
+        <!--statement超时时间-->
+        <setting name="defaultStatementTimeout" value="25"/>
+
+        <!--单次执行大小-->
+        <setting name="defaultFetchSize" value="100"/>
+
+        <setting name="safeRowBoundsEnabled" value="false"/>
+        <!--开启数据库_ 到java的驼峰命名转换-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="localCacheScope" value="SESSION"/>
+        <setting name="jdbcTypeForNull" value="OTHER"/>
+        <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
+    </settings>
+
+    <!--类型别名是为 Java 类型设置一个短的名字。 它只和 XML 配置有关，存在的意义仅在于用来减少类完全限定名的冗余-->
+    <typeAliases>
+        <!--如果不使用spring 需要自定义DataSource情况 -->
+        <typeAlias alias="DRUID" type="work.lishubin.java.mybatis.datasource.MyDataSource" />
+        <typeAlias alias="MyBean" type="work.lishubin.java.mybatis.bean.MyBean"/>
+    </typeAliases>
+
+
+    <environments default="development">
+
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <!--如果不使用spring 需要自定义DataSource情况 自定义DataSource 需要实现DataSourceFactory 接口 -->
+            <dataSource type="DRUID">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--加载对应的mapper接口映射-->
+        <mapper resource="./BeanTestMapper.xml"/>
+    </mappers>
+</configuration>

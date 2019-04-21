@@ -1,0 +1,32 @@
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# Where and how to store data.
+#  engine:
+#  mmapv1:
+#  wiredTiger:
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /usr/local/mongo/mongos/log/mongos.log
+
+# network interfaces
+net:
+  port: 20000
+  bindIp: 0.0.0.0
+  maxIncomingConnections: 1000
+
+# how the process runs
+processManagement:
+  fork: true
+sharding:
+  configDB: replconf/mongo0:21000,mongo1:21000,mongo2:21000
+## Enterprise-Only Options:
+
+
+#auditLog:
+

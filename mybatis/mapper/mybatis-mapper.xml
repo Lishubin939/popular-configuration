@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+        <!--指定对应的mapper接口类-->
+<mapper namespace="work.lishubin.java.mybatis.mapper.MyBeanMapper">
+
+<!--	从这条语句中返回的期望类型的类的完全限定名或别名。
+注意如果返回的是集合，那应该设置为集合包含的类型，而不是集合本身。
+可以使用 resultType 或 resultMap，但不能同时使用。-->
+<select id="selectMyBean" parameterType="int" resultType="MyBean">
+    select * from myshop.jdbc_test where jdbc_id = 1
+</select>
+
+<insert id="insertMyBean" parameterType="MyBean" useGeneratedKeys="true">
+    <!--默认使用bean对象的属性来访问，需要有getter方法-->
+    insert into myshop.jdbc_test(jdbc_name,jdbc_desc) values (#{jdbcName},#{jdbcDesc})
+</insert>
+</mapper>
