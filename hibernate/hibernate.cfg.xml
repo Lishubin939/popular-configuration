@@ -7,43 +7,54 @@
         <property name="hibernate.dialect">
             org.hibernate.dialect.MySQL5Dialect
         </property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 
         <!-- Assume test is the database name -->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
 
-        <!--加入Druid DataSource -->
-        <!--Druid Start
-        <property name="driverClassName">com.mysql.jdbc.Driver</property>
-        <property name="url">jdbc:mysql:///localhost:3306?useSSL=false</property>
-        <property name="username">root</property>
-        <property name="password">root</property>
-        <property name="filter">stat,log4j</property>
-        <property name="initialSize">5</property>
-        <property name="maxActive">100</property>
-        <property name="maxWait">60000</property>
-        <property name="timeBetweenEvictionRunsMillis">60000</property>
-        <property name="minEvictableIdleTimeMillis">300000</property>
-        <property name="validationQuery">SELECT 1</property>
-        <property name="testWhileIdle">true</property>
-        <property name="testOnBorrow">false</property>
-        <property name="testOnReturn">false</property>
-        <property name="poolPreparedStatements">false</property>
-        <property name="maxPoolPreparedStatementPerConnectionSize">200</property>
-        <property name="hibernate.connection.provider_class"
-            com.alibaba.druid.support.hibernate.DruidConnectionProvider
-        </property>
-        -->
-        <!--Druid End-->
+        <!-- 配置 C3P0 数据源-->
+        <!--数据库连接池的最大连接数-->
+        <property name="hibernate.c3p0.max_size">10</property>
+        <!--数据库连接池的最小连接数-->
+        <property name="hibernate.c3p0.min_size">5</property>
+        <!--当数据库连接池中的连接耗尽时, 同一时刻获取多少个数据库连接-->
+        <property name="c3p0.acquire_increment">2</property>
+        <!--表示连接池检测线程多长时间检测一次池内的所有链接对象是否超时.
+        连接池本身不会把自己从连接池中移除，而是专门有一个线程按照一定的时间间隔来做这件事，
+        这个线程通过比较连接对象最后一次被使用时间和当前时间的时间差来和 timeout 做对比，进而决定是否销毁这个连接对象。-->
+        <property name="c3p0.idle_test_period">2000</property>
+        <!--数据库连接池中连接对象在多长时间没有使用过后，就应该被销毁-->
+        <property name="c3p0.timeout">2000</property>
+        <!--缓存 Statement 对象的数量-->
+        <property name="c3p0.max_statements">10</property>
 
 
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- 设置二级缓存-->
+        <!--开启二级缓存-->
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <!-- 配置指定的二级缓存-->
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.internal.EhcacheRegionFactory</property>
+        <property name="hibernate.cache.provider_configuration_file_resource_path">./ehcache.xml</property>
+        <!--开启查询缓存-->
+        <property name="hibernate.cache.use_query_cache">true</property>
+
+        <property name="hibernate.connection.isolation">8</property>
+
+
+        <!-- session 使用ThreadLocal 实现线程安全-->
+        <property name="hibernate.current_session_context_class">thread</property>
 
         <!-- List of XML mapping files -->
-        <mapping resource="mapper/employee.hbm.xml"/>
-        <mapping class="work.lishubin.java.hibernate.bean.UserEntity"/>
-        <mapping resource="work/lishubin/java/hibernate/bean/UserEntity.hbm.xml"/>
+
+
+        <!-- 给需要缓存的类进行配置-->
+
 
     </session-factory>
 </hibernate-configuration>
